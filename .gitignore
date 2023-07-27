@@ -1,0 +1,10 @@
+
+.woke-build
+.woke-logs
+.env
+pytypes
+__pycache__/
+*.py[cod]
+.hypothesis/
+.junk/
+woke-coverage.cov

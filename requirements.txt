@@ -1,0 +1,2 @@
+wokelib @ git+https://github.com/khegeman/wokelib@main
+python-dotenv
