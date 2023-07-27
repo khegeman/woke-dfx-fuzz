@@ -1,6 +1,6 @@
 [submodule "protocol-v2"]
 	path = protocol-v2
 	url = https://github.com/dfx-finance/protocol-v2.git
-[submodule "lib"]
-	path = lib
+[submodule "node_modules/forge-std"]
+	path = node_modules/forge-std
 	url = https://github.com/foundry-rs/forge-std
