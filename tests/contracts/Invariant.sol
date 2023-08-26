@@ -63,9 +63,9 @@ contract Invariant {
     }
 
     /**
-        Expose invariant calculations to the fuzzer
+        Expose invariant calculations to the fuzzer, with additional fields for debugging
      */
-    function compute(uint256[2] memory _weights, int128[] memory _bals,uint256 _beta, uint256 _delta,uint256 _totalSupply) external pure returns (uint256 invariant_,int128 fee_,int128 g_, int128 totalShells_) {
+    function computeExtra(uint256[2] memory _weights, int128[] memory _bals,uint256 _beta, uint256 _delta,uint256 _totalSupply) external pure returns (uint256 invariant_,int128 fee_,int128 g_, int128 totalShells_) {
         
 
         int128 __weight0 = _weights[0].divu(1e18).add(uint256(1).divu(1e18));
@@ -85,4 +85,27 @@ contract Invariant {
         invariant_ = uint256(int256(r));
         
     }
+
+    /**
+        Expose invariant calculations to the fuzzer
+     */    
+    function compute(uint256[2] memory _weights, int128[] memory _bals,uint256 _beta, uint256 _delta,uint256 _totalSupply) external pure returns (uint256 invariant_) {
+        
+        int128 __weight0 = _weights[0].divu(1e18).add(uint256(1).divu(1e18));
+        int128 __weight1 = _weights[1].divu(1e18).add(uint256(1).divu(1e18));
+
+        int128 beta = (_beta + 1).divu(1e18);        
+        int128 delta = _delta.divu(1e18); 
+        int128[2] memory weights = [__weight0,__weight1];
+        int128 totalShells_ = _totalSupply.divu(1e18);
+        int128 g_ = 0;
+        for (uint i =0; i< _bals.length; ++i) {
+            g_ += _bals[i];
+        }
+        
+        int128 fee_ = calculateFee(g_, _bals, beta, delta, weights);
+        int128 r = (g_ - fee_).div(totalShells_);
+        invariant_ = uint256(int256(r));
+
+    }    
 }

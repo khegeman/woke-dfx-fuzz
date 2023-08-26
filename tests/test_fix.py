@@ -20,8 +20,8 @@ load_dotenv()
 
 
 @default_chain.connect(fork=f"{os.getenv('POL_RPC_URL')}@{45204868}")
-def test_polygon_before():
-    random.seed(44)
+def test_polygon_after():
+    
     default_chain.set_default_accounts(default_chain.accounts[0])
 
     PolygonChain = DFXChainConfig(
